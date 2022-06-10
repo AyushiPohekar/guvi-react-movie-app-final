@@ -1,5 +1,10 @@
+
 import logo from './logo.svg';
 import './App.css';
+import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
+import { Addcolor } from "./Addcolor";
+import { Message } from "./Message";
+import { useState } from 'react';
 
 function App() {
   
@@ -96,15 +101,15 @@ function App() {
       rating: "9",
       summary: "Peter Jackson's expansive remake of the 1933 classic follows director Carl Denham (Jack Black) and his crew on a journey from New York City to the ominous Skull Island to film a new movie. Accompanying him are playwright Jack Driscoll (Adrien Brody) and actress Ann Darrow (Naomi Watts), who is whisked away by the monstrous ape, Kong, after they reach the island. The crew encounters dinosaurs and other creatures as they race to rescue Ann, while the actress forms a bond with her simian captor.",
     },
+   
 ];
+const [movieList,setmovieList]=useState(movies);
 
   return (
     <div className="App">
-      <div className="Movie-list">
-       
-
-           {movies.map((movies) => (<Message poster={movies.poster} name={movies.name} rating={movies.rating} summary={movies.summary} />
-          ))} 
+ 
+           {/* {movies.map((movies) => (<Message poster={movies.poster} name={movies.name} rating={movies.rating} summary={movies.summary} />
+          ))}  */}
            {/* {{movies.map((movies) => (<Message  poster={movies.poster}  />
       ))}
       <div className='Movie-title'>
@@ -113,9 +118,10 @@ function App() {
         </div>
         {movies.map((movies2) => (<Message  summary={movies2.summary}  />
         ))}} */}
-       
-      </div>
-
+     
+      <MovieList movieList={movieList} setmovieList={setmovieList}/>
+      <Addcolor/>
+      {/* <Addmovie/> */}
     </div>
 
 
@@ -124,15 +130,41 @@ function App() {
 }
 
 export default App;
-function Message({ poster, name, rating, summary }) {
-  return (
-    <div className='Movie-container'>
-      <img className='Movie-poster' src={poster} alt={name}
-      />
-      <div className='Movie-individual'>
-      <h3 className='Movie-name'>{name}</h3>
-      <p className='Movie-rating'>&#11088;{rating}</p></div>
-      <p className='Movie-summary'>{summary}</p>
-    </div>
-  );
+
+function MovieList({movieList,setmovieList})
+{
+  const [name, setName] = useState("");
+  const [rating, setRating] = useState("");
+  const [poster, setPoster] = useState("");
+  const [summary, setSummary] = useState("");
+  const addmovie=()=>{const newmovie={
+    name:name,
+    poster:poster,
+    rating:rating,
+    summary:summary,
+   };
+   setmovieList([...movieList,newmovie]);
+
+  }
+  
+  return(
+   
+   <div>
+      <div className='add-movie-form'>  
+      <input placeholder='Name' onChange={(event) => setName(event.target.value)} />
+      <input placeholder='Poster' onChange={(event) => setPoster(event.target.value)}/>
+      <input placeholder='Rating' onChange={(event) => setRating(event.target.value)}/>
+      <input placeholder='Summary' onChange={(event) => setSummary(event.target.value)}/>
+      <button onClick={addmovie}>Add Movie</button>
+     
+      
+      
+      </div>
+      <div className="Movie-list">
+  {movieList.map((mv,index)=>(<Message key={index} movie={mv}/>))}  
+  </div>
+  </div>
+  ); 
 }
+
+

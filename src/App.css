@@ -1,19 +1,11 @@
-/* .App {
-  text-align: center;
-} */
+ .App {
+ background-color: rgba(0, 0, 0, 0.808);
+} 
 .Movie-container {
   width: 340px;
   margin-top: 10px;
-}
-
-.Movie-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  /* grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(7,1fr); */
-  grid-gap: 1rem;
-  gap: 1rem;
-  justify-items: center;
+  background-color: black;
+ 
 }
 
 .Movie-poster {
@@ -22,13 +14,35 @@
   object-fit: cover;
 }
 
+/* .Movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  /* grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(7,1fr); */
+  /* grid-gap: 1rem;
+  gap: 1rem;
+  justify-items: center;
+} */ 
+
+.Movie-list {
+  display:flex;
+  flex-wrap: wrap; 
+  gap:10px;
+  justify-content: space-around;
+}
+.Movie-summary{
+  margin-top: 0px;
+  color: white;
+}
+
+
 .Movie-individual {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.Movie-name {
+/* .Movie-name {
   display: block;
   font-size: 22px;
   margin-block-start: 1em;
@@ -36,12 +50,32 @@
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
+} */
+.Movie-name{
+  font-size: 24px;
+  margin:0;
+  color: azure;
 }
 
-.Movie-rating {
+/* .Movie-rating {
   display: block;
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+} */
+.Movie-rating{
+  font-size: 18px;
+}
+.counters-container{
+  display:flex;
+  gap:10px;
+  font-size: 18px;
+}
+
+.add-movie-form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
 }
