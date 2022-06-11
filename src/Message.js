@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Counter } from "./Counter";
 
 //  function Addmovie()
@@ -25,12 +26,14 @@ import { Counter } from "./Counter";
 //       </div>
 //   );
 //  }
-export function Message({ movie }) {
+export function Message({ movie,id }) {
   //conditional styling
   const [show, setShow] = useState(true);
   const parastyles = {
     display: show ? "block" : "none",
   };
+
+  const navigate=useNavigate();
 
   const styles = {
     color: movie.rating > 8 ? "green" : "red",
@@ -43,6 +46,7 @@ export function Message({ movie }) {
         <h3 className='Movie-name'>{movie.name}</h3>
         <p style={styles} className='Movie-rating'>&#11088;{movie.rating}</p></div>
       <button onClick={() => setShow(!show)}>toggle summary</button>
+      <button onClick={()=>navigate(`/movies/${id}`)}>info</button>
       {/* conditional styling */}
       {/* <p style={parastyles} className='Movie-summary'>{movies.summary}</p> */}
       {show ? <p className='Movie-summary'>{movie.summary}</p> : null}
