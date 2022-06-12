@@ -2,6 +2,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Counter } from "./Counter";
 
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import InfoIcon from '@mui/icons-material/Info';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Button, CardActionArea, CardActions } from '@mui/material';
+
+
+
 //  function Addmovie()
 //    {
 //     const[movieName,setMovieName]=useState(movies.name);
@@ -39,19 +53,30 @@ export function Message({ movie,id }) {
     color: movie.rating > 8 ? "green" : "red",
   };
   return (
-    <div className='Movie-container'>
+     <Card className='Movie-container' sx={{height:"min-content"}}>
       <img className='Movie-poster' src={movie.poster} alt={movie.name} />
-
+     <CardContent>
       <div className='Movie-individual'>
-        <h3 className='Movie-name'>{movie.name}</h3>
+        <h2 className='Movie-name'>{movie.name}
+        <IconButton color="primary" onClick={()=>navigate(`/movies/${id}`)} aria-label="Movie-Details">
+     <InfoIcon />
+    </IconButton>
+    <IconButton color="primary" onClick={() => setShow(!show)} aria-label="Summary">
+     {show?< ExpandLessIcon/> :<ExpandMoreIcon/>}
+    </IconButton>
+    </h2>
         <p style={styles} className='Movie-rating'>&#11088;{movie.rating}</p></div>
-      <button onClick={() => setShow(!show)}>toggle summary</button>
-      <button onClick={()=>navigate(`/movies/${id}`)}>info</button>
+      
+ 
+      
       {/* conditional styling */}
       {/* <p style={parastyles} className='Movie-summary'>{movies.summary}</p> */}
       {show ? <p className='Movie-summary'>{movie.summary}</p> : null}
+      </CardContent>
+      <CardActions>
       <Counter />
+      </CardActions>
 
-    </div>
+    </Card>
   );
 }

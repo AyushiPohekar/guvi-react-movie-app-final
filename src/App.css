@@ -1,11 +1,11 @@
- .App {
+ /* .App {
  /* background-color: rgba(0, 0, 0, 0.808); */
- background-color: rgb(145, 143, 143) ;
-} 
+
+ 
 .Movie-container {
   width: 340px;
   margin-top: 10px;
-  background-color:black;
+  background-color:white;
  
 }
 
@@ -33,7 +33,7 @@
 }
 .Movie-summary{
   margin-top: 0px;
-  color: white;
+  color:black;
 }
 
 
@@ -55,7 +55,7 @@
 .Movie-name{
   font-size: 24px;
   margin:0;
-  color: azure;
+  color:black;
 }
 
 /* .Movie-rating {
@@ -87,4 +87,8 @@
 }
 .Movie-detail-container{
   max-width: 900px;
+}
+
+.route-container{
+  padding: 16px;
 }
