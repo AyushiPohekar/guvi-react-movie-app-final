@@ -26,6 +26,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { boxSizing } from '@mui/system';
 
 
 function App() {
@@ -111,17 +112,17 @@ function App() {
   return (
 
 
-   
+
     <ThemeProvider theme={darkTheme}>
-      <Paper elevation={0} style={{minHeight:"100vh",borderRadius:"0px"}}>
+      <Paper elevation={0} style={{ minHeight: "100vh", borderRadius: "0px" }}>
         <div className="App">
-    
-  
 
 
-      {/* {movies.map((movies) => (<Message poster={movies.poster} name={movies.name} rating={movies.rating} summary={movies.summary} />
+
+
+          {/* {movies.map((movies) => (<Message poster={movies.poster} name={movies.name} rating={movies.rating} summary={movies.summary} />
           ))}  */}
-      {/* {{movies.map((movies) => (<Message  poster={movies.poster}  />
+          {/* {{movies.map((movies) => (<Message  poster={movies.poster}  />
       ))}
       <div className='Movie-title'>
         {movies.map((movies1)=>(<Message name={movies.name} rating={movies1.rating}/>
@@ -130,16 +131,17 @@ function App() {
         {movies.map((movies2) => (<Message  summary={movies2.summary}  />
         ))}} */}
 
-      <AppBar position="static">
-        <Toolbar>
-          <Button onClick={() => navigate('/')} color="inherit">Home</Button>
-          <Button onClick={() => navigate('/movies')} color="inherit">Movies</Button>
-          <Button onClick={() => navigate('/movies/add')} color="inherit">Add Movie</Button>
-          <Button onClick={() => navigate('/color-game')} color="inherit">Color Game</Button>
-          <Button color="inherit" startIcon={mode==="dark"?<Brightness7Icon/>:<Brightness4Icon/>} onClick={() => setmode(mode==="light"?"dark":"light")} >{mode==="light"?"dark":"light"} mode</Button>
-        </Toolbar>
-      </AppBar>
-      {/* <nav>
+          <AppBar position="static">
+            <Toolbar>
+              <Button onClick={() => navigate('/')} color="inherit">Home</Button>
+              <Button onClick={() => navigate('/movies')} color="inherit">Movies</Button>
+              <Button onClick={() => navigate('/movies/add')} color="inherit">Add Movie</Button>
+              <Button onClick={() => navigate('/color-game')} color="inherit">Color Game</Button>
+              <Button onClick={() => navigate('/TicTacToe-game')} color="inherit">TicTacToe</Button>
+              <Button color="inherit" startIcon={mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />} onClick={() => setmode(mode === "light" ? "dark" : "light")} >{mode === "light" ? "dark" : "light"} mode</Button>
+            </Toolbar>
+          </AppBar>
+          {/* <nav>
           <ul>
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/color-game'>Color Game</Link></li>
@@ -147,29 +149,97 @@ function App() {
           
           </ul>
         </nav> */}
-        <section className='route-container'>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movies/:id" element={<MovieDetails movieList={movieList} />} />
-        <Route path="/movies/add" element={<Addmovie movieList={movieList} setmovieList={setmovieList} />} />
-        <Route path="/color-game" element={<Addcolor />} />
-        <Route path="/movies" element={<MovieList movieList={movieList} setmovieList={setmovieList} />} />
-        <Route path="/404" element={<NotFound />} />
-        <Route path="/films" element={<Navigate replace to="/movies" />} />
-        <Route path="*" element={<Navigate replace to="/404" />} />
-      </Routes></section>
+          <section className='route-container'>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/movies/:id" element={<MovieDetails movieList={movieList} />} />
+              <Route path="/movies/add" element={<Addmovie movieList={movieList} setmovieList={setmovieList} />} />
+              <Route path="/color-game" element={<Addcolor />} />
+              <Route path="/TicTacToe-game" element={< TicTacToe />} />
+              <Route path="/movies" element={<MovieList movieList={movieList} setmovieList={setmovieList} />} />
+              <Route path="/404" element={<NotFound />} />
+              <Route path="/films" element={<Navigate replace to="/movies" />} />
+              <Route path="*" element={<Navigate replace to="/404" />} />
+            </Routes></section>
 
 
-      {/* <MovieList movieList={movieList} setmovieList={setmovieList}/>
+          {/* <MovieList movieList={movieList} setmovieList={setmovieList}/>
       <Addcolor/> */}
-      {/* <Addmovie/> */}
-    </div>
-     </Paper>
+          {/* <Addmovie/> */}
+        </div>
+      </Paper>
     </ThemeProvider>
-  
+
   );
 
 }
 export default App;
 
+function TicTacToe() {
+  return (<div><h1>Fun Game</h1>
+    <Board /></div>
+    
+  );
+}
+function Board() {
+  const [board, setBoard] = useState([null, null, null, null, null, null, null, null, null])
+  const [isXTurn, setisXTurn] = useState(true);
+ 
+  const resetState=()=>{setBoard([null, null, null, null, null, null, null, null, null])};
 
+   const decidewinner=(board)=>{
+    const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    for(var i=0;i<lines.length;i++){
+      const [a,b,c]=lines[i];
+      if( board[a]!==null &&board[a]===board[b]&&board[b]===board[c]){
+        console.log("Winner",board[a]);
+        return board[a];
+      }
+    }
+    return null;
+   };
+
+   const winner=decidewinner(board);
+
+   const handleClick = (index) => {
+    console.log(index);
+    if(!winner&&board[index]===null){
+    const boadcopy =[...board];
+    boadcopy[index]=isXTurn ?"X":"O";
+    setBoard(boadcopy);
+    setisXTurn(!isXTurn);
+    }
+  };
+
+  
+  return (<div className='board' >
+  
+  {board.map((val, index) => <Gamebox val={val} onPlayerClick={() => handleClick(index)} />)}
+  <h2>Winner is:{winner}</h2>
+  
+  <div className='reset'>
+    {/* <button onClick={resetState}>Reset</button> */}
+    {/* <Button onClick={resetState} color="primary" >Reset</Button> */}
+    <Button onClick={resetState} variant="contained">RESET</Button>
+    </div>
+  
+  </div>
+  );
+}
+
+
+
+function Gamebox({ val, onPlayerClick }) {
+  const styles = {
+    color: val === "X" ? "green" : "red",
+  };
+  return (
+    <div style={styles} onClick={onPlayerClick} className='game-box'>{val}</div>);
+}
+// {<div></div>
+//   const [val,setVal]=[useState("")];
+//   const styles={
+//     color:val==="X"?"green":"red",
+//   };
+//   return(<div  style={styles} onClick={()=>setVal()} className='game-box'>{val}</div>);
+// }
