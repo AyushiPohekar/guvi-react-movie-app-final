@@ -23,7 +23,7 @@ export function Addcolor() {
   const styles = {
     backgroundColor: color,
   };
-  const INITIAL_COLORLIST = ["green", "yellow", "blue"];
+  const INITIAL_COLORLIST = ["purple", "red", "orange"];
   const [ColorList, setColorlist] = useState(INITIAL_COLORLIST);
   return (
     <div className="ColorAddition">

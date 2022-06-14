@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
@@ -21,6 +21,11 @@ import { Addmovie } from './Addmovie';
 import { MovieList } from './MovieList';
 import { MovieDetails } from './MovieDetails';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 
 
 function App() {
@@ -94,12 +99,25 @@ function App() {
 
 
   ];
+  const [mode, setmode] = useState("dark");
   const [movieList, setmovieList] = useState(movie);
   const navigate = useNavigate();
+  const darkTheme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
 
   return (
 
-    <div className="App">
+
+   
+    <ThemeProvider theme={darkTheme}>
+      <Paper elevation={0} style={{minHeight:"100vh",borderRadius:"0px"}}>
+        <div className="App">
+    
+  
+
 
       {/* {movies.map((movies) => (<Message poster={movies.poster} name={movies.name} rating={movies.rating} summary={movies.summary} />
           ))}  */}
@@ -118,6 +136,7 @@ function App() {
           <Button onClick={() => navigate('/movies')} color="inherit">Movies</Button>
           <Button onClick={() => navigate('/movies/add')} color="inherit">Add Movie</Button>
           <Button onClick={() => navigate('/color-game')} color="inherit">Color Game</Button>
+          <Button color="inherit" startIcon={mode==="dark"?<Brightness7Icon/>:<Brightness4Icon/>} onClick={() => setmode(mode==="light"?"dark":"light")} >{mode==="light"?"dark":"light"} mode</Button>
         </Toolbar>
       </AppBar>
       {/* <nav>
@@ -145,8 +164,9 @@ function App() {
       <Addcolor/> */}
       {/* <Addmovie/> */}
     </div>
-
-
+     </Paper>
+    </ThemeProvider>
+  
   );
 
 }
