@@ -4,14 +4,21 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useState,useEffect } from 'react';
 
 
 
 
-export function MovieDetails({ movieList }) {
+export function MovieDetails() {
+const { id } = useParams();
+  // const movie = movieList[id];
+  const [movie, setmovie] = useState({});
 
-  const { id } = useParams();
-  const movie = movieList[id];
+  const getMovie=()=>{fetch(`https://62a970daec36bf40bdb78cff.mockapi.io/movies${id}`).then(data=>data.json()).then((mv)=>setmovie(mv));
+  };
+  useEffect(()=>getMovie(),[]);
+
+
   const navigate = useNavigate();
   const styles = {
     color: movie.rating > 8 ? "green" : "red",

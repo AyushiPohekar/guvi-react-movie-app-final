@@ -1,7 +1,27 @@
 import { Message } from "./Message";
+import { useState,useEffect } from 'react';
 
-export function MovieList({ movieList, setmovieList }) {
-  // const [name, setName] = useState("");
+export function MovieList() {
+  const [movieList, setmovieList] = useState([]);
+
+  const getMovies=()=>{fetch("https://62a970daec36bf40bdb78cff.mockapi.io/movies").then(data=>data.json()).then((mvs)=>setmovieList(mvs));
+  };
+
+  useEffect(()=>getMovies(),[]);
+ //delete first refresh later
+  const deleteMovie=(id)=>{fetch(`https://62a970daec36bf40bdb78cff.mockapi.io/movies${id}`,{method:'DELETE',
+  }).then(()=>getMovies())
+};
+
+  return (
+    <div>
+      <div className="Movie-list">
+        {movieList.map((mv, index) => (<Message key={mv.id} movie={mv} id={mv.id} deletebutton={<button onClick={()=>deleteMovie(mv.id)}>Delete</button>}/>))}
+      </div>
+    </div>
+  );
+}
+ // const [name, setName] = useState("");
   // const [rating, setRating] = useState("");
   // const [poster, setPoster] = useState("");
   // const [summary, setSummary] = useState("");
@@ -12,10 +32,7 @@ export function MovieList({ movieList, setmovieList }) {
   //   summary:summary,
   //  };
   //  setmovieList([...movieList,newmovie]);
-  return (
-
-    <div>
-      {/* <div className='add-movie-form'>
+  {/* <div className='add-movie-form'>
            
             <TextField label="Name" variant="outlined" onChange={(event) => setName(event.target.value)} />
             <TextField label="Poster" variant="outlined" onChange={(event) => setPoster(event.target.value)} />
@@ -26,9 +43,3 @@ export function MovieList({ movieList, setmovieList }) {
             
             
             </div> */}
-      <div className="Movie-list">
-        {movieList.map((mv, index) => (<Message key={index} movie={mv} id={index} />))}
-      </div>
-    </div>
-  );
-}

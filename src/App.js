@@ -27,6 +27,9 @@ import Paper from '@mui/material/Paper';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { boxSizing } from '@mui/system';
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
+
 
 
 function App() {
@@ -34,7 +37,7 @@ function App() {
   const movie = [
 
     {
-
+      id:"100",
       name: "RRR",
       poster:
         "https://englishtribuneimages.blob.core.windows.net/gallary-content/2021/6/Desk/2021_6$largeimg_977224513.JPG",
@@ -42,7 +45,7 @@ function App() {
       summary: "RRR is an upcoming Indian Telugu-language period action drama film directed by S. S. Rajamouli, and produced by D. V. V. Danayya of DVV Entertainments.",
       trailer: "https://www.youtube.com/embed/f_vbAtFSEc0"
     },
-    {
+    { id:"101",
       name: "Iron man 2",
       poster: "https://m.media-amazon.com/images/M/MV5BMTM0MDgwNjMyMl5BMl5BanBnXkFtZTcwNTg3NzAzMw@@._V1_FMjpg_UX1000_.jpg",
       rating: 7,
@@ -50,7 +53,7 @@ function App() {
       trailer: "https://www.youtube.com/embed/wKtcmiifycU"
     },
     {
-
+      id:"102",
       name: "No Country for Old Men",
       poster: "https://upload.wikimedia.org/wikipedia/en/8/8b/No_Country_for_Old_Men_poster.jpg",
       rating: 8.1,
@@ -58,7 +61,7 @@ function App() {
       trailer: "https://www.youtube.com/embed/38A__WT3-o0"
     },
     {
-
+      id:"103",
       name: "Jai Bhim",
       poster: "https://m.media-amazon.com/images/M/MV5BY2Y5ZWMwZDgtZDQxYy00Mjk0LThhY2YtMmU1MTRmMjVhMjRiXkEyXkFqcGdeQXVyMTI1NDEyNTM5._V1_FMjpg_UX1000_.jpg",
       summary: "A tribal woman and a righteous lawyer battle in court to unravel the mystery around the disappearance of her husband, who was picked up the police on a false case",
@@ -66,7 +69,7 @@ function App() {
       trailer: "https://www.youtube.com/embed/nnXpbTFrqXA"
     },
     {
-
+      id:"104",
       name: "The Avengers",
       rating: 8,
       summary: "Marvel's The Avengers (classified under the name Marvel Avengers\n Assemble in the United Kingdom and Ireland), or simply The Avengers, is\n a 2012 American superhero film based on the Marvel Comics superhero team\n of the same name.",
@@ -74,7 +77,7 @@ function App() {
       trailer: "https://www.youtube.com/embed/eOrNdBpGMv8"
     },
     {
-
+      id:"105",
       name: "Interstellar",
       poster: "https://m.media-amazon.com/images/I/A1JVqNMI7UL._SL1500_.jpg",
       rating: 8.6,
@@ -82,7 +85,7 @@ function App() {
       "trailer": "https://www.youtube.com/embed/zSWdZVtXT7E"
     },
     {
-
+      id:"106",
       name: "Baahubali",
       poster: "https://flxt.tmsimg.com/assets/p11546593_p_v10_af.jpg",
       rating: 8,
@@ -90,7 +93,7 @@ function App() {
       trailer: "https://www.youtube.com/embed/sOEg_YZQsTI"
     },
     {
-
+      id:"107",
       name: "Ratatouille",
       poster: "https://resizing.flixster.com/gL_JpWcD7sNHNYSwI1ff069Yyug=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzLzc4ZmJhZjZiLTEzNWMtNDIwOC1hYzU1LTgwZjE3ZjQzNTdiNy5qcGc=",
       rating: 8,
@@ -152,11 +155,11 @@ function App() {
           <section className='route-container'>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/movies/:id" element={<MovieDetails movieList={movieList} />} />
+              <Route path="/movies/:id" element={<MovieDetails />} />
               <Route path="/movies/add" element={<Addmovie movieList={movieList} setmovieList={setmovieList} />} />
               <Route path="/color-game" element={<Addcolor />} />
               <Route path="/TicTacToe-game" element={< TicTacToe />} />
-              <Route path="/movies" element={<MovieList movieList={movieList} setmovieList={setmovieList} />} />
+              <Route path="/movies" element={<MovieList />} />
               <Route path="/404" element={<NotFound />} />
               <Route path="/films" element={<Navigate replace to="/movies" />} />
               <Route path="*" element={<Navigate replace to="/404" />} />
@@ -185,17 +188,21 @@ function Board() {
   const [board, setBoard] = useState([null, null, null, null, null, null, null, null, null])
   const [isXTurn, setisXTurn] = useState(true);
  
-  const resetState=()=>{setBoard([null, null, null, null, null, null, null, null, null])};
+  const resetState=()=>{setBoard([null, null, null, null, null, null, null, null, null])
+  setisXTurn(true)};
+
+ 
 
    const decidewinner=(board)=>{
     const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     for(var i=0;i<lines.length;i++){
       const [a,b,c]=lines[i];
-      if( board[a]!==null &&board[a]===board[b]&&board[b]===board[c]){
+      if( board[a]!==null &&board[a]===board[b]&&board[b]===board[c]&&board[a]===board[c]){
         console.log("Winner",board[a]);
         return board[a];
       }
     }
+    
     return null;
    };
 
@@ -210,16 +217,25 @@ function Board() {
     setisXTurn(!isXTurn);
     }
   };
-
+  // const draw=(index)=>{
+  //   if(winner){
+  //     return <h2>Game over!!Winner is {winner}</h2>
+  //    }
+  //    else if(!winner&&board[index]!==null){
+  //      return <h2>Game over!!It is DRAW.</h2>
+  //    }
+  //    else return null;
+  // };
   
-  return (<div className='board' >
-  
+  const { width, height } = useWindowSize();
+  return (
+  <div className='board' >
+  { winner ? <Confetti width={width} height={height} gravity={0.02}/> :  null }
   {board.map((val, index) => <Gamebox val={val} onPlayerClick={() => handleClick(index)} />)}
-  <h2>Winner is:{winner}</h2>
-  
+ 
   <div className='reset'>
-    {/* <button onClick={resetState}>Reset</button> */}
-    {/* <Button onClick={resetState} color="primary" >Reset</Button> */}
+  
+    {winner?<h2>Game over!!Winner is {winner}🎇</h2>:null}
     <Button onClick={resetState} variant="contained">RESET</Button>
     </div>
   
