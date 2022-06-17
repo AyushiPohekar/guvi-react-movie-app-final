@@ -9,7 +9,8 @@ export function MovieList() {
 
   useEffect(()=>getMovies(),[]);
  //delete first refresh later
-  const deleteMovie=(id)=>{fetch(`https://62a970daec36bf40bdb78cff.mockapi.io/movies${id}`,{method:'DELETE',
+  const deleteMovie=(id)=>{fetch(`https://62a970daec36bf40bdb78cff.mockapi.io/movies/${id}`,{
+    method:'DELETE',
   }).then(()=>getMovies())
 };
 

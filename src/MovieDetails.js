@@ -14,7 +14,7 @@ const { id } = useParams();
   // const movie = movieList[id];
   const [movie, setmovie] = useState({});
 
-  const getMovie=()=>{fetch(`https://62a970daec36bf40bdb78cff.mockapi.io/movies${id}`).then(data=>data.json()).then((mv)=>setmovie(mv));
+  const getMovie=()=>{fetch(`https://62a970daec36bf40bdb78cff.mockapi.io/movies/${id}`).then(data=>data.json()).then((mv)=>setmovie(mv));
   };
   useEffect(()=>getMovie(),[]);
 
