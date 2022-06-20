@@ -1,5 +1,6 @@
 import { Message } from "./Message";
 import { useState,useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 export function MovieList() {
   const [movieList, setmovieList] = useState([]);
@@ -8,16 +9,22 @@ export function MovieList() {
   };
 
   useEffect(()=>getMovies(),[]);
+
  //delete first refresh later
   const deleteMovie=(id)=>{fetch(`https://62a970daec36bf40bdb78cff.mockapi.io/movies/${id}`,{
     method:'DELETE',
   }).then(()=>getMovies())
 };
 
+const navigate = useNavigate();
   return (
     <div>
       <div className="Movie-list">
-        {movieList.map((mv, index) => (<Message key={mv.id} movie={mv} id={mv.id} deletebutton={<button onClick={()=>deleteMovie(mv.id)}>Delete</button>}/>))}
+        {movieList.map((mv) => (<Message key={mv.id} movie={mv} id={mv.id} 
+        deletebutton={<button onClick={()=>deleteMovie(mv.id)}>Delete</button>}
+          editbutton={<button onClick={()=>navigate(`/movies/edit/${mv.id}`)}>Edit</button>}/>
+        ))}
+        
       </div>
     </div>
   );

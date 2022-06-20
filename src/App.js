@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { NotFound } from './NotFound';
 import { Home } from './Home';
 import { Addmovie } from './Addmovie';
+import { Editmovie } from './Editmovie';
 import { MovieList } from './MovieList';
 import { MovieDetails } from './MovieDetails';
 
@@ -156,7 +157,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/movies/:id" element={<MovieDetails />} />
-              <Route path="/movies/add" element={<Addmovie movieList={movieList} setmovieList={setmovieList} />} />
+              <Route path="/movies/add" element={<Addmovie/>} />
+              <Route path="/movies/edit/:id" element={<Editmovie/>} />
               <Route path="/color-game" element={<Addcolor />} />
               <Route path="/TicTacToe-game" element={< TicTacToe />} />
               <Route path="/movies" element={<MovieList />} />

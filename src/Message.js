@@ -17,7 +17,7 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 
 
 
-export function Message({ movie,id,deletebutton}) {
+export function Message({ movie,id,deletebutton,editbutton}) {
   //conditional styling
   const [show, setShow] = useState(true);
   const parastyles = {
@@ -51,7 +51,7 @@ export function Message({ movie,id,deletebutton}) {
       {show ? <p className='Movie-summary'>{movie.summary}</p> : null}
       </CardContent>
       <CardActions>
-      <Counter /> {deletebutton}
+      <Counter /> {deletebutton} {editbutton}
       </CardActions>
 
     </Card>
