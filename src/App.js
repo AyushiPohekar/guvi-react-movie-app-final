@@ -30,6 +30,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { boxSizing } from '@mui/system';
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
+import { Basicform } from './Basicform.1';
 
 
 
@@ -158,6 +159,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/movies/:id" element={<MovieDetails />} />
               <Route path="/movies/add" element={<Addmovie/>} />
+              <Route path="/basic-form" element={<Basicform/>} />
               <Route path="/movies/edit/:id" element={<Editmovie/>} />
               <Route path="/color-game" element={<Addcolor />} />
               <Route path="/TicTacToe-game" element={< TicTacToe />} />
@@ -186,6 +188,8 @@ function TicTacToe() {
     
   );
 }
+
+
 function Board() {
   const [board, setBoard] = useState([null, null, null, null, null, null, null, null, null])
   const [isXTurn, setisXTurn] = useState(true);
