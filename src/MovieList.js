@@ -2,6 +2,11 @@ import { Message } from "./Message";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "./global";
+import InfoIcon from '@mui/icons-material/Info';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 export function MovieList() {
   const [movieList, setmovieList] = useState([]);
@@ -32,14 +37,21 @@ export function MovieList() {
             key={mv.id}
             movie={mv}
             id={mv.id}
+            
             deletebutton={
-              <button onClick={() => deleteMovie(mv.id)}>Delete</button>
+    <IconButton color="error" onClick={()=>deleteMovie(mv.id)} aria-label="Movie-Delete">
+     <DeleteIcon  />
+    </IconButton>
             }
             editbutton={
-              <button onClick={() => navigate(`/movies/edit/${mv.id}`)}>
-                Edit
-              </button>
+              <IconButton color="primary" onClick={() => navigate(`/movies/edit/${mv.id}`)} aria-label="Movie-edit">
+     < EditIcon />
+    </IconButton>
             }
+            
+
+            
+           
           />
         ))}
       </div>
